@@ -1,6 +1,8 @@
 //获取元素
 var $oul=$('.ulBox');
 var $listBox=$('.listBox');
+var $tabs=$('.tab_box ul li')
+var $tabContents=$('.tab_content')
 
 /*
 实现轮播图
@@ -98,7 +100,7 @@ p.then(function (data) {
 //新闻列表部分
 var listPro=new Promise(function (resolve,reject) {
     $.ajax({
-        type:'post',
+        type:'get',
         url: 'sina/data/list.json',
         data:{w:1},
         success:function (data) {
@@ -173,4 +175,13 @@ function giveHtml1(data) {
 }
 listPro.then(function (data) {
     giveHtml1(data)
+})
+/*
+3个tab绑定点击事件
+ */
+$tabs.on('touchend',function () {
+    console.log(this);
+    $(this).addClass('current').siblings().removeClass('current');
+    var n=$(this).index();
+    $tabContents.eq(n).show().siblings('.tab_content').hide();
 })
